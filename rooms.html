@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   <link rel="stylesheet" href="style.css">
+   <style>
+    .titleroom {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .navigation {
+      position: absolute;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      background-image: url('try/navbg.png');
+    }
+
+    .btn {
+      float: right;
+      margin-right: 5rem;
+    }
+
+    .slide {
+      display: inline-block;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .slide.selected {
+      border: 2px solid #007bff;
+      background-color: #f0f8ff;
+    }
+   </style>
+</head>
+<body>
+  <div class="navigation">
+    <a href="#page1"><img src="img/logo-modified.png" class="logo" /></a>
+    <ul>
+      <li><a href="#aboutus">ABOUT US</a></li>
+      <li><a href="#gallery">GALLERY</a></li>
+      <li><a href="#events">EVENTS</a></li>
+      <li><a href="#contactus">CONTACT US</a></li>
+    </ul>
+  </div>
+
+  <div class="roomselect" style="margin-top: 10rem;">
+    <div class="titleroom">
+      <img src="img/dot.png" alt="..." style="width: 7%" />
+      <h1>ROOMS</h1>
+    </div>
+
+    <div class="page3"> 
+      <button class="slider-btn prev-btn">
+        <img src="img/prev.png" alt="" />
+      </button>
+      <div class="slider-container">
+        <div class="slider-wrapper">
+          <div class="slider">
+            <!-- Room Images -->
+            <div class="slide" data-value="Room1">
+              <div>
+                <img src="img/room1.jpg" alt="room1" class="room-photo" />
+              </div>
+              <div class="room1down">
+                <p style="font-size: 18px"><b>For 2 people(Standard)</b></p>
+                <p><b>Rs. 1200</b> per night</p>
+              </div>
+            </div>
+            <div class="slide" data-value="Room2">
+              <div>
+                <img src="img/room2.jpg" alt="room2" class="room-photo" />
+              </div>
+              <div class="room1down">
+                <p style="font-size: 18px"><b>For 3 people(Deluxe)</b></p>
+                <p><b>Rs. 1500</b> per night</p>
+              </div>
+            </div>
+            <div class="slide" data-value="Room3">
+              <div>
+                <img src="img/room3.jpg" alt="room3" class="room-photo" />
+              </div>
+              <div class="room1down">
+                <p style="font-size: 18px"><b>For 4 people(Suite)</b></p>
+                <p><b>Rs. 2000</b> per night</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="slider-btn next-btn" style="float: right;">
+        <img src="img/prev.png" alt="" />
+      </button>
+    </div>
+  </div>
+  <button class="btn" onclick="redirectToPage()">NEXT</button>
+
+  <script>
+    let selectedRoom = null;
+
+    // Select all slides
+    const slides = document.querySelectorAll('.slide');
+
+    // Add click event to each slide
+    slides.forEach(slide => {
+      slide.addEventListener('click', () => {
+        // Remove 'selected' class from all slides
+        slides.forEach(s => s.classList.remove('selected'));
+
+        // Add 'selected' class to the clicked slide
+        slide.classList.add('selected');
+
+        // Store the value of the selected room
+        selectedRoom = slide.getAttribute('data-value');
+      });
+    });
+
+    // Redirect to the next page
+    function redirectToPage() {
+      // Check if any room is selected
+      if (!selectedRoom) {
+        alert("Please select an option!");
+        return;
+      }
+    
+      // Set the cookie with the selected room value
+      document.cookie = `selectedRoom=${selectedRoom}; path=/; max-age=3600`;
+    
+      // Redirect to the desired page
+      
+        window.location.href = "contact.php";
+    
+    }
+    
+      </script>
+        
+
+
+  <script src="./slider.js"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CheckIn</title>
+  <link rel="stylesheet" href="Check-style.css" />
+  <style>
+   
+    .image-option {
+      position: relative;
+      display: block;
+      cursor: pointer;
+    }
+
+    .image-option img {
+      transition: transform 0.3s;
+    }
+
+    .image-option:hover img,
+    .image-option.selected img {
+      transform: scale(1.05);
+    }
+
+    .description {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 92%;
+      height: 15%;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+      text-align: center;
+      padding: 1rem;
+      font-weight: 400;
+      font-size: 18px;
+    }
+
+    .image-option:hover .description,
+    .image-option.selected .description {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="checkin">
+    <div class="navigation">
+      <a href="#page1"><img src="img/logo-modified.png" class="logo" /></a>
+      <ul>
+        <li><a href="#aboutus">ABOUT US</a></li>
+        <li><a href="#gallery">GALLERY</a></li>
+        <li><a href="#events">EVENTS</a></li>
+        <li><a href="#contactus">CONTACT US</a></li>
+      </ul>
+    </div>
+
+    <div class="content">
+      <div class="title">
+        <img src="img/dot.png" alt="..." />
+        <h2>What are you looking for?</h2>
+      </div>
+
+      <div class="options">
+        <div class="image-option" data-description="Day Room for Relaxation">
+          <input type="radio" id="image1" name="image" value="Day" />
+          <label for="image1">
+            <img src="img/day.jpg" alt="Room 1" />
+            <div class="description">A Perfect Daycation</div>
+          </label>
+        </div>
+
+        <div class="image-option" data-description="Cozy Room for Couples">
+          <input type="radio" id="image2" name="image" value="Night" />
+          <label for="image2">
+            <img src="img/room2.jpg" alt="Room 2" />
+            <div class="description">Cozy Room for Overnight stay</div>
+          </label>
+        </div>
+
+        <div class="image-option" data-description="Event Hall for Gatherings">
+          <input type="radio" id="image3" name="image" value="Event" />
+          <label for="image3">
+            <img src="img/event2.png" alt="Room 3" />
+            <div class="description">Book an upcoming event</div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn" onclick="redirectToPage()">NEXT</button>
+
+  <script>
+    const imageOptions = document.querySelectorAll('.image-option');
+    let selectedOption = null;
+
+    // Add click event listener to each image option
+    imageOptions.forEach(option => {
+      option.addEventListener('click', () => {
+        // Remove the selected class from all options
+        imageOptions.forEach(o => o.classList.remove('selected'));
+
+        // Add the selected class to the clicked option
+        option.classList.add('selected');
+
+        // Set the selected room value
+        selectedOption = option.querySelector('input[name="image"]').value;
+
+        // Store the selected room in cookies
+        document.cookie = `selectedOption=${encodeURIComponent(selectedOption)}; path=/; max-age=3600`;
+      });
+    });
+
+    function redirectToPage() {
+      // Check if a room is selected
+      if (!selectedOption)  {
+        alert("Please select an option!");
+        return;
+      }
+
+      // Redirect based on the selected room
+      if (selectedOption === "Day") {
+        window.location.href = `contact.php?room=${encodeURIComponent(selectedOption)}`;
+      } else if (selectedOption === "Night") {
+        window.location.href = `rooms.html?room=${encodeURIComponent(selectedOption)}`;
+      } else if (selectedOption === "Event") {
+        window.location.href = `event.html?room=${encodeURIComponent(selectedOption)}`;
+      }
+    }
+  </script>
+</body>
+</html>
